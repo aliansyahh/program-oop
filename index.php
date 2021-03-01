@@ -19,6 +19,29 @@ class Produk
     {
         return "{$this->penulis}, {$this->penerbit}";
     }
+
+    public function getInfoProduk()
+    {
+        $str = "{$this->judul} | {$this->getLabel()}, (Rp. {$this->harga})";
+        return $str;
+    }
+}
+
+class Game extends Produk
+{
+    public $wktMain;
+
+    public function __construct($judul, $penulis, $penerbit, $harga, $wktMain)
+    {
+        parent::__construct($judul, $penulis, $penerbit, $harga);
+        $this->wktMain = $wktMain;
+    }
+
+    public function getInfoProduk()
+    {
+        $str = "Game : " . parent::getInfoProduk() . " {$this->wktMain} Jam.";
+        return $str;
+    }
 }
 
 class CetakInfoProduk
@@ -30,6 +53,5 @@ class CetakInfoProduk
     }
 }
 
-$produk1 = new Produk("Mobile Legend", "Moonton", "Playstore", 2000);
-$cetak = new CetakInfoProduk;
-echo $cetak->cetak($produk1);
+$produk1 = new Game("Mobile Legend", "Moonton", "Playstore", 2000, 2);
+echo $produk1->getInfoProduk();
